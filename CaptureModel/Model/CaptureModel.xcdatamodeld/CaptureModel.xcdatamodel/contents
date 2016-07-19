@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+    <entity name="Attachment" representedClassName="CaptureModel.Attachment" syncable="YES">
+        <attribute name="contractIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="directory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isCorrupted" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="localThumbnailPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="needsRemoteVerification" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsS3Verification" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="remoteThumbnailPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shouldBlockWhenJSONMapping" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="shouldSaveAssets" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalFileBytes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalNumFiles" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="uploaded" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="uploadedFileBytes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contract" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contract" inverseName="attachments" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="remoteFiles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RemoteFile" inverseName="attachment" inverseEntity="RemoteFile" syncable="YES"/>
+    </entity>
+    <entity name="Contract" representedClassName="CaptureModel.Contract" syncable="YES">
+        <attribute name="acquired" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="arrivalRadius" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="createdAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="eventUrlHash" attributeType="String" syncable="YES"/>
+        <attribute name="hasStartedUpload" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="markedForRemoteDeletion" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsRemoteCompletion" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsRemoteVerification" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="notificationUpdateTime" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="paymentDate" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="paymentState" attributeType="String" defaultValueString="none" syncable="YES"/>
+        <attribute name="resolution" attributeType="String" defaultValueString="open" syncable="YES"/>
+        <attribute name="started" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="streamApplication" attributeType="String" syncable="YES"/>
+        <attribute name="streamHost" attributeType="String" syncable="YES"/>
+        <attribute name="streamName" attributeType="String" syncable="YES"/>
+        <attribute name="streamPort" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="streamProtocol" attributeType="String" syncable="YES"/>
+        <attribute name="totalAttachmentFileBytes" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="uploadedAttachmentFileBytes" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="urlHash" attributeType="String" syncable="YES"/>
+        <relationship name="attachments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attachment" inverseName="contract" inverseEntity="Attachment" syncable="YES"/>
+        <relationship name="event" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="contract" inverseEntity="Event" syncable="YES"/>
+        <relationship name="notifications" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Notification" inverseName="contractSource" inverseEntity="Notification" syncable="YES"/>
+        <relationship name="publisher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Publisher" inverseName="contracts" inverseEntity="Publisher" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="contracts" inverseEntity="Team" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="CaptureModel.Event" syncable="YES">
+        <attribute name="bannerImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contractUrlHash" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="creatorIconUrl" attributeType="String" syncable="YES"/>
+        <attribute name="creatorName" attributeType="String" syncable="YES"/>
+        <attribute name="detailDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayTime" optional="YES" attributeType="Date" defaultDateTimeInterval="473317200" syncable="YES"/>
+        <attribute name="exactAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="heroUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hiringCutoffTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="localDeletionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="locationName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="markedForDeletionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="needsToCreateRemoteContract" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsToDeleteRemoteContract" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="notificationUpdateTime" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="paymentAmount" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="publicUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="radius" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="urlHash" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contract" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Contract" inverseName="event" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="notifications" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Notification" inverseName="eventSource" inverseEntity="Notification" syncable="YES"/>
+    </entity>
+    <entity name="Notification" representedClassName="CaptureModel.Notification" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="needsRemoteVerification" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="readAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="sourceUrlHash" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="urlHash" attributeType="String" syncable="YES"/>
+        <relationship name="contractSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contract" inverseName="notifications" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="eventSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="notifications" inverseEntity="Event" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="readAt"/>
+            </compoundIndex>
+            <compoundIndex>
+                <index value="sourceUrlHash"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <entity name="Publisher" representedClassName="CaptureModel.Publisher" syncable="YES">
+        <attribute name="avatarUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamUrlHash" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="urlHash" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contracts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contract" inverseName="publisher" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="publishers" inverseEntity="Team" syncable="YES"/>
+    </entity>
+    <entity name="RemoteFile" representedClassName="CaptureModel.RemoteFile" syncable="YES">
+        <attribute name="corrupted" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="createdAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fileSize" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isUploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="localPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="needsRemoteVerification" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="remotePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
+        <relationship name="attachment" maxCount="1" deletionRule="Nullify" destinationEntity="Attachment" inverseName="remoteFiles" inverseEntity="Attachment" syncable="YES"/>
+    </entity>
+    <entity name="Team" representedClassName="CaptureModel.Team" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="iconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="urlHash" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contracts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contract" inverseName="team" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="publishers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Publisher" inverseName="team" inverseEntity="Publisher" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="CaptureModel.User" syncable="YES">
+        <attribute name="acceptedTNCDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="ageRangeMin" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="equipmentArray" optional="YES" attributeType="Transformable" valueTransformerName="StringArrayTransformerName" syncable="YES"/>
+        <attribute name="experienceDictionary" optional="YES" attributeType="Transformable" valueTransformerName="DictionaryTransformerName" syncable="YES"/>
+        <attribute name="facebookAuthToken" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookProfileUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instagramUsername" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAttemptingLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isLoggedIn" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="needsPaypalEmail" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsPaypalVerification" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsRemoteVerification" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="paypalAccessCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paypalEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paypalVerified" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="phoneNumber" attributeType="String" defaultValueString="0000000000" syncable="YES"/>
+        <attribute name="remoteAvatarUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalPaymentsMade" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-978289200" syncable="YES"/>
+        <attribute name="urlHash" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="validationError" optional="YES" attributeType="Transformable" valueTransformerName="DictionaryTransformerName" syncable="YES"/>
+        <attribute name="workReelArray" optional="YES" attributeType="Transformable" valueTransformerName="DictionaryArrayTransformerName" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Attachment" positionX="-63" positionY="-18" width="128" height="375"/>
+        <element name="Contract" positionX="-54" positionY="144" width="128" height="450"/>
+        <element name="Event" positionX="-36" positionY="153" width="128" height="465"/>
+        <element name="Notification" positionX="-45" positionY="135" width="128" height="195"/>
+        <element name="Publisher" positionX="-36" positionY="144" width="128" height="195"/>
+        <element name="RemoteFile" positionX="-45" positionY="135" width="128" height="225"/>
+        <element name="Team" positionX="-45" positionY="135" width="128" height="150"/>
+        <element name="User" positionX="-18" positionY="162" width="128" height="465"/>
+    </elements>
+</model>

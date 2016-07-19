@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WWWUrl</key>
+	<string>$(WWW_URL)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ApiUrl</key>
+	<string>$(API_URL)</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ClientId</key>
+	<string>$(CLIENT_ID)</string>
+	<key>ClientSecret</key>
+	<string>$(CLIENT_SECRET)</string>
+	<key>EnvironmentUrl</key>
+	<string>$(REDIRECT_URL)</string>
+	<key>NSPrincipalClass</key>
+	<string></string>
+	<key>PaypalClientId</key>
+	<string>$(PAYPAL_CLIENT_ID)</string>
+	<key>PaypalClientSandboxId</key>
+	<string>$(PAYPAL_CLIENT_SANDBOX_ID)</string>
+	<key>S3AccessKey</key>
+	<string>$(S3_ACCESS_KEY)</string>
+	<key>S3AccessSecret</key>
+	<string>$(S3_ACCESS_SECRET)</string>
+	<key>S3Bucket</key>
+	<string>$(S3_BUCKET)</string>
+</dict>
+</plist>

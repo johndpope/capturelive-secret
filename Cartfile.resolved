@@ -1,0 +1,4 @@
+github "Alamofire/Alamofire" "3.4.1"
+github "robbiehanson/CocoaAsyncSocket" "f477467fa793f7a012d3af9c373c6014d7267a55"
+github "bitstadium/HockeySDK-iOS" "4.0.1"
+github "ashleymills/Reachability.swift" "v2.3.3"

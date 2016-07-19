@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='32' failures='0'>
+  <testsuite name='CaptureLiveTests.ApplicationReportableTests' tests='3' failures='0'>
+    <testcase classname='CaptureLiveTests.ApplicationReportableTests' name='testAppSpecsWithTokenIntialllyHasNilToken' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ApplicationReportableTests' name='testAppSpecsWithTokenReturnsTokenWhenSet' time='0.004'/>
+    <testcase classname='CaptureLiveTests.ApplicationReportableTests' name='testSpecsReturnsPopulatedDictionary' time='0.005'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassCreateProfileTests' tests='7' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_enoughToPassPhoneLongin' time='0.004'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_false_hasTermsAndConditions_NoLocationPermissions' time='0.010'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_false_hasTermsAndConditions_NoPermissions' time='0.009'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_false_hasTermsAndConditions_NoPushPermissions' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_false_noTermsAndConditions_NoPermissions' time='0.006'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_true_hasTermsAndConditions_HasBothPermissions_ButHasError' time='0.009'/>
+    <testcase classname='CaptureLiveTests.ByPassCreateProfileTests' name='testMethod_hasEnoughToSkipProfileCreation_true_hasTermsAndConditions_HasBothPermissions_HasNoError' time='0.008'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassEquipmentTests' tests='4' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassEquipmentTests' name='testMethod_canByPassEquipmentFalseWithNoEquipment' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ByPassEquipmentTests' name='testMethod_canByPassEquipmentTrueWithEquipment_FAILS_shouldNotByPass' time='0.009'/>
+    <testcase classname='CaptureLiveTests.ByPassEquipmentTests' name='testMethod_hasEnoughToGetPastEquipmentCreation_FAIL_markedForSync' time='0.007'/>
+    <testcase classname='CaptureLiveTests.ByPassEquipmentTests' name='testMethod_hasEnoughToGetPastEquipmentCreation_PASS' time='0.010'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassExperienceTests' tests='4' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassExperienceTests' name='testMethod_canByPassExperienceFalseWithNoExperience' time='0.011'/>
+    <testcase classname='CaptureLiveTests.ByPassExperienceTests' name='testMethod_canByPassExperienceTrueWithExperience_FAILS_shouldNotByPass' time='0.007'/>
+    <testcase classname='CaptureLiveTests.ByPassExperienceTests' name='testMethod_hasEnoughToGetPastExperienceCreation_FAILS_markedForSync' time='0.007'/>
+    <testcase classname='CaptureLiveTests.ByPassExperienceTests' name='testMethod_hasEnoughToGetPastExperienceCreation_PASS' time='0.012'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassFacebookAuthTests' tests='5' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassFacebookAuthTests' name='test_hasEnoughToSkipFacebookAuth_FAIL_markedForRemoteValidation' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ByPassFacebookAuthTests' name='test_hasEnoughToSkipFacebookAuth_FAILS_shouldNotByPass' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ByPassFacebookAuthTests' name='test_hasEnoughToSkipFacebookAuth_PASS' time='0.011'/>
+    <testcase classname='CaptureLiveTests.ByPassFacebookAuthTests' name='testMethod_hasEnoughToSkipFacebookAuth_FAILS_NotEnoughFacebookData' time='0.012'/>
+    <testcase classname='CaptureLiveTests.ByPassFacebookAuthTests' name='testMethod_hasEnoughToSkipFacebookAuth_FAILS_ValidationError' time='0.006'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassReelTests' tests='5' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassReelTests' name='testMethod_canByPassReelFalseIfNoToken' time='0.008'/>
+    <testcase classname='CaptureLiveTests.ByPassReelTests' name='testMethod_canByPassReelFalseWithNoReel' time='0.007'/>
+    <testcase classname='CaptureLiveTests.ByPassReelTests' name='testMethod_canByPassReelTrueWithReel_FAILS_shouldNotByPass' time='0.007'/>
+    <testcase classname='CaptureLiveTests.ByPassReelTests' name='testMethod_hasEnoughToGetPastReelCreation_FAILS_markedForRemoteUpdate' time='0.006'/>
+    <testcase classname='CaptureLiveTests.ByPassReelTests' name='testMethod_hasEnoughToGetPastReelCreation_PASS' time='0.007'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.ByPassTextAuthTests' tests='2' failures='0'>
+    <testcase classname='CaptureLiveTests.ByPassTextAuthTests' name='testMethod_hasEnoughToByPassPhoneLogin_FAIL_User' time='0.005'/>
+    <testcase classname='CaptureLiveTests.ByPassTextAuthTests' name='testMethod_hasEnoughToByPassPhoneLogin_PASS' time='0.008'/>
+  </testsuite>
+  <testsuite name='CaptureLiveTests.OnboardingByPassableTests' tests='2' failures='0'>
+    <testcase classname='CaptureLiveTests.OnboardingByPassableTests' name='testDefaultOnboardingByPassableIsFalse' time='0.003'/>
+    <testcase classname='CaptureLiveTests.OnboardingByPassableTests' name='testSetOnboardingByPassableToTrue' time='0.003'/>
+  </testsuite>
+</testsuites>

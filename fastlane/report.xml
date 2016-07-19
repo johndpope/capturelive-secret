@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+      
+      <testcase classname="fastlane.lanes" name="0: Verifying required fastlane version" time="0.000731">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000696">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: xcrun simctl erase all" time="2.535886">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: git submodule update --init --recursive" time="0.239978">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: Switch to ios build_app lane" time="0.000534">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: /usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' ../CaptureLive/App/supporting\ files/Info.plist" time="0.01111">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: produce" time="8.423129">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: cert" time="3.865128">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="8: sigh" time="5.154694">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="9: gym" time="8.517465">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

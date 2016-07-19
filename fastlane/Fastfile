@@ -1,0 +1,349 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.81.0"
+
+fastlanefolder  = "./fastlane/"
+build_path = "./build/"
+certificates_output_path  = fastlanefolder + "certificates"
+profiles_output_path  = fastlanefolder + "provisioning profiles"
+push_output_path  = fastlanefolder + "pems"
+ENV['SLACK_URL'] = "https://hooks.slack.com/services/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"
+ENV['DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS'] = "-t DAV"
+
+default_platform :ios
+
+platform :ios do
+
+	before_all do
+        sh("xcrun simctl shutdown \"iPhone 6\"")
+        sh("xcrun simctl erase all")
+        sh("git submodule update --init --recursive")
+
+    	# ensure_git_status_clean
+    	# setup_jenkins(force:true)
+	end
+
+    private_lane :setup_app do |options|
+        app_name        = options[:app_name]
+        app_identifier  = options[:app_identifier]
+        configuration   = options[:configuration].nil? ? "Production" : options[:configuration]
+        adhoc           = configuration == "Staging"
+        development     = configuration == "Mobile"
+        isProduction    = (adhoc == false && development == false)
+        produce(
+            app_name:app_name,
+            language:"English",
+            skip_itc:!isProduction,
+            app_identifier:app_identifier,
+            username:options[:build_user]
+        )
+        cert(
+            username:options[:build_user],
+            development:development,
+            output_path:certificates_output_path
+        )
+        sigh(
+            username:options[:build_user],
+            adhoc:adhoc,
+            development:development,
+            app_identifier:app_identifier,
+            output_path:profiles_output_path
+        )
+    end
+
+    lane :setup_screens_app do |options|
+        setup_app(
+            app_name:"CaptureLiveScreens",
+            configuration:"Mobile",
+            build_user:"scott+itunesconnect@capture.com",
+            app_identifier:"com.capturelive.ios.screens",
+            scheme:"CaptureLiveScreens"
+        )
+        setup_app(
+            app_name:"CaptureLiveScreens",
+            configuration:"Staging",
+            build_user:"scott+itunesconnect@capture.com",
+            app_identifier:"com.capturelive.ios.screens",
+            scheme:"CaptureLiveScreens"
+        )
+    end
+
+	private_lane :build_app do |options|
+              app_identifier  = options[:app_identifier]
+              configuration = options[:configuration].nil? ? "Production" : options[:configuration]
+              adhoc = configuration == "Staging"
+              development = configuration == "Mobile"
+              isProduction  = (adhoc == false && development == false)
+              version = sh("/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' ../CaptureLive/App/supporting\\ files/Info.plist")
+              produce(
+                    app_name: "CaptureLive",
+                    language: "English",
+                    app_version: version.to_s,
+                    sku:"CML6U4REDEVU",
+                    skip_itc:!isProduction,
+                    app_identifier:app_identifier,
+                    username:options[:build_user]
+              )
+              cert(
+                    username:options[:build_user],
+                    development:development,
+                    output_path:certificates_output_path
+              )	
+              sigh(
+                    username:options[:build_user],
+                    adhoc:adhoc,
+                    development: development,
+                    app_identifier:app_identifier,
+                    output_path:profiles_output_path
+              )
+              gym(
+                    scheme: options[:scheme],
+                    configuration:configuration,
+                    include_bitcode: isProduction,
+                    include_symbols: adhoc,
+                    # use_legacy_build_api:true
+              )
+	end
+
+	private_lane :run_tests do |options|
+          	scan(
+          		clean:false,
+            		configuration:options[:configuration],
+            		output_directory:'fastlane/unittests/',
+       	 	      scheme:options[:scheme],
+      	            verbose:true,
+      	      	device:"iPhone 6 9.3",
+
+          	)
+	end
+
+	private_lane :run_all_tests do |options|
+    	 	configuration = options[:configuration].nil? ? "Production" : options[:configuration]
+  		run_tests(
+  			configuration:configuration,
+  			scheme:"CaptureModel"
+  		)
+  		run_tests(
+  			configuration:configuration,
+  			scheme:"CaptureSync"
+  		)
+  		run_tests(
+  			configuration:configuration,
+			scheme:"CaptureCore"
+  		)
+  		run_tests(
+  			configuration:configuration,
+  			scheme:"CaptureLive"
+  		)
+	end
+
+    private_lane :pushes do |options|
+        app_identifier    = options[:app_identifier]
+        development     = options[:development].nil? ? false : options[:development] 
+        force     = options[:force].nil? ? false : options[:force] 
+
+        cert(
+            username:options[:build_user],
+            development:development,
+            output_path:certificates_output_path
+        )
+        pem(
+            force:force,
+            username:options[:build_user],
+            development:development,
+            app_identifier:app_identifier,
+            output_path:push_output_path
+        )
+    end
+
+     lane :install do
+            sh "cd ../ && carthage update --platform iOS"
+            setup_app(
+                  app_name:"CaptureLive",
+                  configuration:"Mobile",
+                  app_identifier:"com.capturelive.ios.mobile",
+                  scheme:"CaptureLive"
+            )
+     end
+
+	lane :build_screensapp do
+              sh "cd ../ && carthage update --platform iOS"
+              configuration = "Staging"
+              build_app(
+                    configuration:configuration,
+                    build_user:"jordan@capture.com",
+                    app_identifier:"com.capturelive.ios.screens",
+                    scheme:"CaptureLiveScreens"
+              )
+              changelog = sh("git log --pretty=format:'%an : %s  ' origin/develop..origin/qa")
+              hockey(
+                    api_token: "ca43fdc6bf52448ea50634b074d1d26c",
+                    ipa: './build/CaptureLiveScreens.ipa',
+                    notes_type: "1",
+                    notes: "#{changelog.to_s}",
+              )
+              slack(
+                    message: "OMFG!!! Successfully deployed QA version of CaptureLIVEScreens to HockeyApp. Download email coming shortly..."
+              )
+            end
+
+
+
+	lane :build_mobile do
+       	  # sh "cd ../ && carthage update --platform iOS"
+	  configuration = "Mobile"
+	  build_app(
+	        configuration:configuration,
+	        build_user:"scott+itunesconnect@capture.com",
+	        app_identifier:"com.capturelive.ios.mobile",
+	        scheme:"CaptureLive"
+	  )
+	  run_all_tests(
+	        configuration:configuration
+	  )
+	end
+
+	lane :build_staging do
+              sh "cd ../ && carthage update --platform iOS"
+              configuration = "Staging"
+              build_app(
+                    configuration:configuration,
+                    build_user:"jordan@capture.com",
+                    app_identifier:"com.capturelive.ios.staging",
+                    scheme:"CaptureLive"
+              )
+              run_all_tests(
+                    configuration:configuration
+              )
+
+              changelog = sh("git log --pretty=format:'%an : %s  ' origin/develop..origin/qa")
+              hockey(
+                    api_token: "ca43fdc6bf52448ea50634b074d1d26c",
+                    ipa: './build/CaptureLive.ipa',
+                    notes_type: "1",
+                    notes: "#{changelog.to_s}",
+              )
+              slack(
+                    message: "OMFG!!! Successfully deployed QA version of CaptureLIVE to HockeyApp. Download email coming shortly..."
+              )
+	end 
+
+      lane :build_production do
+              sh "cd ../ && carthage update --platform iOS"
+              username = "jordan@capture.com"
+              build_app(
+                  build_user:username,
+                  app_identifier:"com.capturelive.ios",
+                  scheme:"CaptureLive"
+              )
+              run_all_tests
+              pilot(
+                  ipa:build_path + "CaptureLive.ipa",
+                  username:username,
+                  skip_submission:true
+              )
+              # deliver(
+              #   skip_binary_upload:true,
+              #   submit_for_review:true,
+              #   automatic_release:false,
+              #   username:username,
+              #   skip_screenshots:true,
+              #   force:true
+              # )
+              slack(
+                  message: "OMFG!!! Successfully deployed version of CaptureLIVE to TestFlight. Download email coming shortly..."
+              )
+      end 
+
+
+    lane :scott_production do
+        username = "jordan@capture.com"
+        build_app(
+                  build_user:username,
+                  app_identifier:"com.capturelive.ios",
+                  scheme:"CaptureLive"
+                  )
+        pilot(
+            ipa:build_path + "CaptureLive.ipa",
+            username:username,
+            distribute_external:true
+        )
+    end
+
+    lane :setup_scott_adhoc do
+        setup_app(
+            app_name:"CaptureLive",
+            configuration:"Staging",
+            build_user:"scott+itunesconnect@capture.com",
+            app_identifier:"com.capturelive.ios.staging",
+            scheme:"CaptureLive"
+        )
+    end
+
+
+    lane :run_dem_tests do
+              configuration = "Mobile"
+              run_all_tests(
+                    configuration:configuration
+              )
+    end
+
+
+
+      lane :production_pushes do
+              pushes(
+                    build_user:"jordan@capture.com",
+                    app_identifier:"com.capturelive.ios"
+              )
+      end
+
+      lane :staging_pushes do 
+              pushes(
+                    build_user:"jordan@capture.com",
+                    app_identifier:"com.capturelive.ios.staging"
+              )
+      end
+
+      lane :mobile_pushes do 
+              pushes(
+                    force:true,
+                    build_user:"scott+itunesconnect@capture.com",
+                    development:true,
+                    app_identifier:"com.capturelive.ios.mobile"
+              )
+      end
+
+      after_all do |lane|
+          slack(
+                message: "Jenkins iOS build completed. ",
+                success: false,
+            )
+
+      end
+
+      error do |lane, exception|
+            slack(
+              message: "BOOO!!!!! " + exception.message,
+              success: false,
+            )
+      end
+
+end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+
+# fastlane reports which actions are used
+# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer
