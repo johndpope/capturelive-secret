@@ -16,5 +16,5 @@ gem cleanup
 If your simulator is open, close it!   
 
 ````
-git clone git@github.com:capture/capture-live-ios.git && fastlane install
+git clone git@github.com:hatebyte/capturelive-secret.git && fastlane install
 ````
